@@ -42,17 +42,18 @@ namespace E7_Gear_Optimizer
                    | SecurityProtocolType.Tls12
                    | SecurityProtocolType.Ssl3;
             Icon = Icon.FromHandle(Util.ResizeImage(Properties.Resources.bookmark, 19,18).GetHicon());
-            if (args.Length == 1)
-            {
-                try
-                {
-                    Process.Start("E7 Optimizer Updater.exe");
-                }
-                catch
-                {
-                    MessageBox.Show("Could not find E7 optimizer Updater.exe");
-                }
-            }
+            //Commented for the preview version.
+            //if (args.Length == 1)
+            //{
+            //    try
+            //    {
+            //        Process.Start("E7 Optimizer Updater.exe");
+            //    }
+            //    catch
+            //    {
+            //        MessageBox.Show("Could not find E7 optimizer Updater.exe");
+            //    }
+            //}
             //Read list of heroes from epicsevendb.com
             try
             {
