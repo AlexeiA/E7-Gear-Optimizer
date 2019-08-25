@@ -8118,7 +8118,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "Main";
-            this.Text = "E7 Gear Optimizer";
+            this.Text = "E7 Gear Optimizer - Preview";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
             this.Shown += new System.EventHandler(this.Main_Shown);
             this.tb_Inventory.ResumeLayout(false);
