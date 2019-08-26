@@ -2868,6 +2868,7 @@ namespace E7_Gear_Optimizer
 
         private void Main_Shown(object sender, EventArgs e)
         {
+            return;//For the preview version
             if (args.Length == 1 && File.Exists("E7 Optimizer Updater.exe"))
             {
                 Application.Exit();
