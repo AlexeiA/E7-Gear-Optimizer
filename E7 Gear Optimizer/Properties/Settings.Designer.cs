@@ -82,5 +82,29 @@ namespace E7_Gear_Optimizer.Properties {
                 this["LastUsedFileNameWeb"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool LimitResults {
+            get {
+                return ((bool)(this["LimitResults"]));
+            }
+            set {
+                this["LimitResults"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10000000")]
+        public int LimitResultsNum {
+            get {
+                return ((int)(this["LimitResultsNum"]));
+            }
+            set {
+                this["LimitResultsNum"] = value;
+            }
+        }
     }
 }
