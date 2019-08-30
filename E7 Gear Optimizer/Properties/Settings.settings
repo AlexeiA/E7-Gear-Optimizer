@@ -16,6 +16,7 @@
     </Setting>
     <Setting Name="LastUsedFileNameWeb" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
     <Setting Name="LimitResults" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
