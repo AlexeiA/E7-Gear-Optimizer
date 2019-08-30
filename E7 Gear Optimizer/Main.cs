@@ -1775,7 +1775,7 @@ namespace E7_Gear_Optimizer
                         bool valid = true;
                         foreach (Set s in setFocus)
                         {
-                            valid = valid && activeSets.Contains(s);
+                            valid = valid && activeSets.Count(x => x == s) >= setFocus.Count(x => x == s);
                         }
                         if (!brokenSets)
                         {
