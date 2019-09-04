@@ -147,7 +147,7 @@
             this.b_EditItem = new System.Windows.Forms.Button();
             this.b_NewItem = new System.Windows.Forms.Button();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.button2 = new System.Windows.Forms.Button();
+            this.b_ImporttAppend = new System.Windows.Forms.Button();
             this.b_Export = new System.Windows.Forms.Button();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.b_import = new System.Windows.Forms.Button();
@@ -2088,7 +2088,7 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.button2);
+            this.tabPage1.Controls.Add(this.b_ImporttAppend);
             this.tabPage1.Controls.Add(this.b_Export);
             this.tabPage1.Controls.Add(this.richTextBox1);
             this.tabPage1.Controls.Add(this.b_import);
@@ -2104,13 +2104,13 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(218, 407);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(101, 23);
-            this.button2.TabIndex = 7;
-            this.button2.Text = "Append";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.Button2_Click);
+            this.b_ImporttAppend.Location = new System.Drawing.Point(218, 407);
+            this.b_ImporttAppend.Name = "button2";
+            this.b_ImporttAppend.Size = new System.Drawing.Size(101, 23);
+            this.b_ImporttAppend.TabIndex = 7;
+            this.b_ImporttAppend.Text = "Append";
+            this.b_ImporttAppend.UseVisualStyleBackColor = true;
+            this.b_ImporttAppend.Click += new System.EventHandler(this.B_ImportAppend_Click);
             // 
             // b_Export
             // 
@@ -8729,7 +8729,7 @@
         private System.Windows.Forms.PictureBox pb_OptimizeArmorEquipped;
         private System.Windows.Forms.PictureBox pb_OptimizeHelmetEquipped;
         private System.Windows.Forms.Button b_FilterResults;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button b_ImporttAppend;
         private System.Windows.Forms.NumericUpDown nud_EnhanceFocus;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button b_CancelOptimize;
