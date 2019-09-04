@@ -1976,10 +1976,10 @@
             this.tabPage1.Text = "General";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // b_ImporttAppend
             // 
             this.b_ImporttAppend.Location = new System.Drawing.Point(218, 407);
-            this.b_ImporttAppend.Name = "button2";
+            this.b_ImporttAppend.Name = "b_ImporttAppend";
             this.b_ImporttAppend.Size = new System.Drawing.Size(101, 23);
             this.b_ImporttAppend.TabIndex = 7;
             this.b_ImporttAppend.Text = "Append";
@@ -3214,10 +3214,10 @@
             this.b_CancelOptimize.Visible = false;
             this.b_CancelOptimize.Click += new System.EventHandler(this.B_CancelOptimize_Click);
             // 
-            // button1
+            // b_FilterResults
             // 
             this.b_FilterResults.Location = new System.Drawing.Point(28, 205);
-            this.b_FilterResults.Name = "button1";
+            this.b_FilterResults.Name = "b_FilterResults";
             this.b_FilterResults.Size = new System.Drawing.Size(75, 36);
             this.b_FilterResults.TabIndex = 136;
             this.b_FilterResults.Text = "Filter current results";
