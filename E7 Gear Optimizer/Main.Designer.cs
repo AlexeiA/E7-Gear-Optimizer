@@ -30,15 +30,15 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tb_Inventory = new System.Windows.Forms.TabPage();
             this.l_ItemCount = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
@@ -236,8 +236,16 @@
             this.b_EditHero = new System.Windows.Forms.Button();
             this.b_AddHero = new System.Windows.Forms.Button();
             this.tb_Optimize = new System.Windows.Forms.TabPage();
+            this.is_NecklaceOptimize = new E7_Gear_Optimizer.ItemStats();
+            this.is_BootsOptimize = new E7_Gear_Optimizer.ItemStats();
+            this.is_RingOptimize = new E7_Gear_Optimizer.ItemStats();
+            this.is_ArmorOptimize = new E7_Gear_Optimizer.ItemStats();
+            this.is_HelmetOptimize = new E7_Gear_Optimizer.ItemStats();
+            this.is_WeaponOptimize = new E7_Gear_Optimizer.ItemStats();
             this.label38 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.nud_LimitResults = new System.Windows.Forms.NumericUpDown();
+            this.cb_LimitResults = new System.Windows.Forms.CheckBox();
             this.b_BootsFocus = new System.Windows.Forms.Button();
             this.tb_BootsFocus = new System.Windows.Forms.TextBox();
             this.b_RingFocus = new System.Windows.Forms.Button();
@@ -458,14 +466,6 @@
             this.label53 = new System.Windows.Forms.Label();
             this.ofd_import = new System.Windows.Forms.OpenFileDialog();
             this.sfd_export = new System.Windows.Forms.SaveFileDialog();
-            this.cb_LimitResults = new System.Windows.Forms.CheckBox();
-            this.nud_LimitResults = new System.Windows.Forms.NumericUpDown();
-            this.is_WeaponOptimize = new E7_Gear_Optimizer.ItemStats();
-            this.is_HelmetOptimize = new E7_Gear_Optimizer.ItemStats();
-            this.is_ArmorOptimize = new E7_Gear_Optimizer.ItemStats();
-            this.is_RingOptimize = new E7_Gear_Optimizer.ItemStats();
-            this.is_BootsOptimize = new E7_Gear_Optimizer.ItemStats();
-            this.is_NecklaceOptimize = new E7_Gear_Optimizer.ItemStats();
             this.tb_Inventory.SuspendLayout();
             this.tc_InventorySets.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_ItemLocked)).BeginInit();
@@ -493,6 +493,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pb_Hero)).BeginInit();
             this.tb_Optimize.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_LimitResults)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_EnhanceFocus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_OptimizeBootsEquipped)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_OptimizeRingEquipped)).BeginInit();
@@ -522,7 +523,6 @@
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nud1_SpeedTunerImprint)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb1_SpeedTuner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nud_LimitResults)).BeginInit();
             this.SuspendLayout();
             // 
             // tb_Inventory
@@ -1461,14 +1461,14 @@
             this.dgv_Inventory.AllowUserToDeleteRows = false;
             this.dgv_Inventory.AllowUserToOrderColumns = true;
             this.dgv_Inventory.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_Inventory.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_Inventory.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgv_Inventory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_Inventory.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.c_set,
@@ -1495,14 +1495,14 @@
             this.c_TypeID,
             this.c_ItemID,
             this.c_Locked});
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv_Inventory.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv_Inventory.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgv_Inventory.Location = new System.Drawing.Point(6, 40);
             this.dgv_Inventory.MultiSelect = false;
             this.dgv_Inventory.Name = "dgv_Inventory";
@@ -1898,7 +1898,7 @@
             this.cb_ImportOnLoad.AutoSize = true;
             this.cb_ImportOnLoad.Location = new System.Drawing.Point(80, 437);
             this.cb_ImportOnLoad.Name = "cb_ImportOnLoad";
-            this.cb_ImportOnLoad.Size = new System.Drawing.Size(245, 17);
+            this.cb_ImportOnLoad.Size = new System.Drawing.Size(247, 17);
             this.cb_ImportOnLoad.TabIndex = 8;
             this.cb_ImportOnLoad.Text = "Auto import last used JSON on application start";
             this.cb_ImportOnLoad.UseVisualStyleBackColor = true;
@@ -2481,14 +2481,14 @@
             this.dgv_Heroes.AllowUserToOrderColumns = true;
             this.dgv_Heroes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgv_Heroes.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_Heroes.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_Heroes.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgv_Heroes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_Heroes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.c_Portrait,
@@ -2513,14 +2513,14 @@
             this.c_DMG,
             this.c_DMGpS,
             this.c_HeroID});
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv_Heroes.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv_Heroes.DefaultCellStyle = dataGridViewCellStyle4;
             this.dgv_Heroes.Location = new System.Drawing.Point(7, 44);
             this.dgv_Heroes.MultiSelect = false;
             this.dgv_Heroes.Name = "dgv_Heroes";
@@ -2875,6 +2875,60 @@
             this.tb_Optimize.UseVisualStyleBackColor = true;
             this.tb_Optimize.TextChanged += new System.EventHandler(this.Tb_Optimize_TextChanged);
             // 
+            // is_NecklaceOptimize
+            // 
+            this.is_NecklaceOptimize.Image = null;
+            this.is_NecklaceOptimize.Item = null;
+            this.is_NecklaceOptimize.Location = new System.Drawing.Point(1258, 1);
+            this.is_NecklaceOptimize.Name = "is_NecklaceOptimize";
+            this.is_NecklaceOptimize.Size = new System.Drawing.Size(181, 210);
+            this.is_NecklaceOptimize.TabIndex = 146;
+            // 
+            // is_BootsOptimize
+            // 
+            this.is_BootsOptimize.Image = null;
+            this.is_BootsOptimize.Item = null;
+            this.is_BootsOptimize.Location = new System.Drawing.Point(1258, 521);
+            this.is_BootsOptimize.Name = "is_BootsOptimize";
+            this.is_BootsOptimize.Size = new System.Drawing.Size(181, 210);
+            this.is_BootsOptimize.TabIndex = 117;
+            // 
+            // is_RingOptimize
+            // 
+            this.is_RingOptimize.Image = null;
+            this.is_RingOptimize.Item = null;
+            this.is_RingOptimize.Location = new System.Drawing.Point(1258, 258);
+            this.is_RingOptimize.Name = "is_RingOptimize";
+            this.is_RingOptimize.Size = new System.Drawing.Size(181, 210);
+            this.is_RingOptimize.TabIndex = 145;
+            // 
+            // is_ArmorOptimize
+            // 
+            this.is_ArmorOptimize.Image = null;
+            this.is_ArmorOptimize.Item = null;
+            this.is_ArmorOptimize.Location = new System.Drawing.Point(997, 521);
+            this.is_ArmorOptimize.Name = "is_ArmorOptimize";
+            this.is_ArmorOptimize.Size = new System.Drawing.Size(181, 210);
+            this.is_ArmorOptimize.TabIndex = 144;
+            // 
+            // is_HelmetOptimize
+            // 
+            this.is_HelmetOptimize.Image = null;
+            this.is_HelmetOptimize.Item = null;
+            this.is_HelmetOptimize.Location = new System.Drawing.Point(997, 259);
+            this.is_HelmetOptimize.Name = "is_HelmetOptimize";
+            this.is_HelmetOptimize.Size = new System.Drawing.Size(181, 210);
+            this.is_HelmetOptimize.TabIndex = 143;
+            // 
+            // is_WeaponOptimize
+            // 
+            this.is_WeaponOptimize.Image = null;
+            this.is_WeaponOptimize.Item = null;
+            this.is_WeaponOptimize.Location = new System.Drawing.Point(997, 1);
+            this.is_WeaponOptimize.Name = "is_WeaponOptimize";
+            this.is_WeaponOptimize.Size = new System.Drawing.Size(181, 210);
+            this.is_WeaponOptimize.TabIndex = 142;
+            // 
             // label38
             // 
             this.label38.AutoSize = true;
@@ -2915,6 +2969,44 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(207, 309);
             this.panel1.TabIndex = 141;
+            // 
+            // nud_LimitResults
+            // 
+            this.nud_LimitResults.Increment = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.nud_LimitResults.Location = new System.Drawing.Point(97, 240);
+            this.nud_LimitResults.Maximum = new decimal(new int[] {
+            100000000,
+            0,
+            0,
+            0});
+            this.nud_LimitResults.Name = "nud_LimitResults";
+            this.nud_LimitResults.Size = new System.Drawing.Size(84, 20);
+            this.nud_LimitResults.TabIndex = 142;
+            this.nud_LimitResults.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.nud_LimitResults.ThousandsSeparator = true;
+            this.nud_LimitResults.Value = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.nud_LimitResults.ValueChanged += new System.EventHandler(this.Nud_LimitResults_ValueChanged);
+            // 
+            // cb_LimitResults
+            // 
+            this.cb_LimitResults.AutoSize = true;
+            this.cb_LimitResults.Checked = true;
+            this.cb_LimitResults.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cb_LimitResults.Location = new System.Drawing.Point(6, 243);
+            this.cb_LimitResults.Name = "cb_LimitResults";
+            this.cb_LimitResults.Size = new System.Drawing.Size(85, 17);
+            this.cb_LimitResults.TabIndex = 141;
+            this.cb_LimitResults.Text = "Limit Results";
+            this.cb_LimitResults.UseVisualStyleBackColor = true;
+            this.cb_LimitResults.CheckedChanged += new System.EventHandler(this.Cb_LimitResults_CheckedChanged);
             // 
             // b_BootsFocus
             // 
@@ -3748,14 +3840,14 @@
             this.dgv_OptimizeResults.AllowUserToDeleteRows = false;
             this.dgv_OptimizeResults.AllowUserToOrderColumns = true;
             this.dgv_OptimizeResults.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_OptimizeResults.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_OptimizeResults.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.dgv_OptimizeResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_OptimizeResults.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn1,
@@ -3773,14 +3865,14 @@
             this.dataGridViewTextBoxColumn24,
             this.dataGridViewTextBoxColumn19,
             this.dataGridViewTextBoxColumn25});
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv_OptimizeResults.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv_OptimizeResults.DefaultCellStyle = dataGridViewCellStyle7;
             this.dgv_OptimizeResults.Location = new System.Drawing.Point(6, 416);
             this.dgv_OptimizeResults.MultiSelect = false;
             this.dgv_OptimizeResults.Name = "dgv_OptimizeResults";
@@ -3868,10 +3960,10 @@
             // 
             // dataGridViewImageColumn1
             // 
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle15.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle15.NullValue")));
-            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewImageColumn1.DefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle6.NullValue")));
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewImageColumn1.DefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridViewImageColumn1.HeaderText = "Sets";
             this.dataGridViewImageColumn1.MinimumWidth = 8;
             this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
@@ -3922,14 +4014,14 @@
             this.dgv_CurrentGear.AllowUserToOrderColumns = true;
             this.dgv_CurrentGear.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgv_CurrentGear.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_CurrentGear.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_CurrentGear.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
             this.dgv_CurrentGear.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_CurrentGear.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn3,
@@ -3947,14 +4039,14 @@
             this.dataGridViewTextBoxColumn21,
             this.dataGridViewTextBoxColumn12,
             this.dataGridViewTextBoxColumn22});
-            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle18.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv_CurrentGear.DefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv_CurrentGear.DefaultCellStyle = dataGridViewCellStyle9;
             this.dgv_CurrentGear.Location = new System.Drawing.Point(6, 333);
             this.dgv_CurrentGear.MultiSelect = false;
             this.dgv_CurrentGear.Name = "dgv_CurrentGear";
@@ -5391,98 +5483,6 @@
             this.sfd_export.FileName = "E7 Gear Optimizer.json";
             this.sfd_export.Filter = "JSON|*.json";
             // 
-            // cb_LimitResults
-            // 
-            this.cb_LimitResults.AutoSize = true;
-            this.cb_LimitResults.Checked = true;
-            this.cb_LimitResults.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cb_LimitResults.Location = new System.Drawing.Point(6, 243);
-            this.cb_LimitResults.Name = "cb_LimitResults";
-            this.cb_LimitResults.Size = new System.Drawing.Size(85, 17);
-            this.cb_LimitResults.TabIndex = 141;
-            this.cb_LimitResults.Text = "Limit Results";
-            this.cb_LimitResults.UseVisualStyleBackColor = true;
-            this.cb_LimitResults.CheckedChanged += new System.EventHandler(this.Cb_LimitResults_CheckedChanged);
-            // 
-            // nud_LimitResults
-            // 
-            this.nud_LimitResults.Increment = new decimal(new int[] {
-            1000000,
-            0,
-            0,
-            0});
-            this.nud_LimitResults.Location = new System.Drawing.Point(97, 240);
-            this.nud_LimitResults.Maximum = new decimal(new int[] {
-            100000000,
-            0,
-            0,
-            0});
-            this.nud_LimitResults.Name = "nud_LimitResults";
-            this.nud_LimitResults.Size = new System.Drawing.Size(84, 20);
-            this.nud_LimitResults.TabIndex = 142;
-            this.nud_LimitResults.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.nud_LimitResults.ThousandsSeparator = true;
-            this.nud_LimitResults.Value = new decimal(new int[] {
-            10000000,
-            0,
-            0,
-            0});
-            this.nud_LimitResults.ValueChanged += new System.EventHandler(this.Nud_LimitResults_ValueChanged);
-            //
-            // is_WeaponOptimize
-            // 
-            this.is_WeaponOptimize.Image = null;
-            this.is_WeaponOptimize.Item = null;
-            this.is_WeaponOptimize.Location = new System.Drawing.Point(997, 1);
-            this.is_WeaponOptimize.Name = "is_WeaponOptimize";
-            this.is_WeaponOptimize.Size = new System.Drawing.Size(181, 210);
-            this.is_WeaponOptimize.TabIndex = 142;
-            // 
-            // is_HelmetOptimize
-            // 
-            this.is_HelmetOptimize.Image = null;
-            this.is_HelmetOptimize.Item = null;
-            this.is_HelmetOptimize.Location = new System.Drawing.Point(997, 259);
-            this.is_HelmetOptimize.Name = "is_HelmetOptimize";
-            this.is_HelmetOptimize.Size = new System.Drawing.Size(181, 210);
-            this.is_HelmetOptimize.TabIndex = 143;
-            // 
-            // is_ArmorOptimize
-            // 
-            this.is_ArmorOptimize.Image = null;
-            this.is_ArmorOptimize.Item = null;
-            this.is_ArmorOptimize.Location = new System.Drawing.Point(997, 521);
-            this.is_ArmorOptimize.Name = "is_ArmorOptimize";
-            this.is_ArmorOptimize.Size = new System.Drawing.Size(181, 210);
-            this.is_ArmorOptimize.TabIndex = 144;
-            // 
-            // is_RingOptimize
-            // 
-            this.is_RingOptimize.Image = null;
-            this.is_RingOptimize.Item = null;
-            this.is_RingOptimize.Location = new System.Drawing.Point(1258, 258);
-            this.is_RingOptimize.Name = "is_RingOptimize";
-            this.is_RingOptimize.Size = new System.Drawing.Size(181, 210);
-            this.is_RingOptimize.TabIndex = 145;
-            // 
-            // is_BootsOptimize
-            // 
-            this.is_BootsOptimize.Image = null;
-            this.is_BootsOptimize.Item = null;
-            this.is_BootsOptimize.Location = new System.Drawing.Point(1258, 521);
-            this.is_BootsOptimize.Name = "is_BootsOptimize";
-            this.is_BootsOptimize.Size = new System.Drawing.Size(181, 210);
-            this.is_BootsOptimize.TabIndex = 117;
-            // 
-            // is_NecklaceOptimize
-            // 
-            this.is_NecklaceOptimize.Image = null;
-            this.is_NecklaceOptimize.Item = null;
-            this.is_NecklaceOptimize.Location = new System.Drawing.Point(1258, 1);
-            this.is_NecklaceOptimize.Name = "is_NecklaceOptimize";
-            this.is_NecklaceOptimize.Size = new System.Drawing.Size(181, 210);
-            this.is_NecklaceOptimize.TabIndex = 146;
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -5534,6 +5534,7 @@
             this.tb_Optimize.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_LimitResults)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_EnhanceFocus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_OptimizeBootsEquipped)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_OptimizeRingEquipped)).EndInit();
@@ -5574,7 +5575,6 @@
             this.tableLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nud1_SpeedTunerImprint)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb1_SpeedTuner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nud_LimitResults)).EndInit();
             this.ResumeLayout(false);
 
         }
