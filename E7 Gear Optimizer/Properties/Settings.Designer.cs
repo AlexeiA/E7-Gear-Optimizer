@@ -10,7 +10,6 @@
 
 namespace E7_Gear_Optimizer.Properties {
     
-    
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.2.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
@@ -32,6 +31,18 @@ namespace E7_Gear_Optimizer.Properties {
             }
             set {
                 this["UseCache"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool LimitResults {
+            get {
+                return ((bool)(this["LimitResults"]));
+            }
+            set {
+                this["LimitResults"] = value;
             }
         }
         
@@ -80,6 +91,18 @@ namespace E7_Gear_Optimizer.Properties {
             }
             set {
                 this["LastUsedFileNameWeb"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10000000")]
+        public int LimitResultsNum {
+            get {
+                return ((int)(this["LimitResultsNum"]));
+            }
+            set {
+                this["LimitResultsNum"] = value;
             }
         }
     }

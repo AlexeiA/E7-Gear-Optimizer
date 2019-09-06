@@ -17,5 +17,11 @@
     <Setting Name="LastUsedFileNameWeb" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="LimitResults" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="LimitResultsNum" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">10000000</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

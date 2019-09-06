@@ -60,6 +60,9 @@ namespace E7_Gear_Optimizer
             Properties.Settings.Default.LastUsedFileNameWeb = web;
             Properties.Settings.Default.Save();
         }
+        static bool limitResults = Properties.Settings.Default.LimitResults;
+        static int limitResultsNum = Properties.Settings.Default.LimitResultsNum;
+        static long resultsCurrent;//long is used to allow use Interlocked.Read() as that method is more clear than .CompareExchange()
 
         public Main()
         {
@@ -220,10 +223,12 @@ namespace E7_Gear_Optimizer
             lb_Sub2.SelectedIndex = 0;
             lb_Sub3.SelectedIndex = 0;
             lb_Sub4.SelectedIndex = 0;
-
             cb_ImportOnLoad.Checked = importOnLoad;
             cb_CacheWeb.Checked = useCache;
             btn_InvalidateCache.Enabled = useCache;
+            cb_LimitResults.Checked = Properties.Settings.Default.LimitResults;
+            nud_LimitResults.Enabled = Properties.Settings.Default.LimitResults;
+            nud_LimitResults.Value = Properties.Settings.Default.LimitResultsNum;
         }
 
         
@@ -1712,6 +1717,7 @@ namespace E7_Gear_Optimizer
                 SStats sHeroStats = new SStats(hero.calcStatsWithoutGear((float)nud_CritBonus.Value / 100f));
                 SStats sItemStats = new SStats();
                 Dictionary<Stats, (float, float)> optimizedFilterStats = optimizeFilterStats();
+                Interlocked.Exchange(ref resultsCurrent, 0);
                 foreach (Item w in weapons)
                 {
                     sItemStats.Add(w.AllStats);
@@ -1737,6 +1743,10 @@ namespace E7_Gear_Optimizer
                     if (tasks.Count > 0)
                     {
                         combinations = (await Task.WhenAll(tasks)).Aggregate((a, b) => { a.AddRange(b); return a; });
+                        if (limitResults && combinations.Count > limitResultsNum)
+                        {
+                            combinations = combinations.Take(limitResultsNum).ToList();
+                        }
                     }
                     b_CancelOptimize.Hide();
                     pB_Optimize.Hide();
@@ -1745,6 +1755,10 @@ namespace E7_Gear_Optimizer
                     dgv_OptimizeResults.RowCount = Math.Min(100, combinations.Count);
                     optimizePage = 1;
                     l_Pages.Text = "1 / " + ((combinations.Count + 99) / 100);
+                    if (limitResults && resultsCurrent >= limitResultsNum)
+                    {
+                        MessageBox.Show("Maximum number of combinations reached. Please try to narrow the filter.", "Limit break", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
                 catch (OperationCanceledException)
                 {
@@ -1759,16 +1773,19 @@ namespace E7_Gear_Optimizer
         }
 
         //Calculate all possible gear combinations and check whether they satisfy the given filters
-
         private static List<(Item[], SStats)> calculate(Item weapon, Item helmet,
-                                                                        Item armor, List<Item> necklaces,
-                                                                        List<Item> rings, List<Item> boots, Hero hero, 
-                                                                        SStats sStats,
-                                                                        Dictionary<Stats, (float, float)> filter, List<Set> setFocus,
-                                                                        IProgress<int> progress, SStats sItemStats,
-                                                                        bool brokenSets, CancellationToken ct)
+                                                        Item armor, List<Item> necklaces,
+                                                        List<Item> rings, List<Item> boots, Hero hero, 
+                                                        SStats sStats,
+                                                        Dictionary<Stats, (float, float)> filter, List<Set> setFocus,
+                                                        IProgress<int> progress, SStats sItemStats,
+                                                        bool brokenSets, CancellationToken ct)
         {
             List<(Item[], SStats)> combinations = new List<(Item[], SStats)>();
+            if (limitResults && Interlocked.Read(ref resultsCurrent) >= limitResultsNum)
+            {
+                return combinations;
+            }
             int[] setCounter = new int[Util.SETS_LENGTH];
             setCounter[(int)weapon.Set]++;
             setCounter[(int)helmet.Set]++;
@@ -1784,10 +1801,10 @@ namespace E7_Gear_Optimizer
                     setCounter[(int)r.Set]++;
                     foreach (Item b in boots)
                     {
+                        ct.ThrowIfCancellationRequested();
+
                         sItemStats.Add(b.AllStats);
                         setCounter[(int)b.Set]++;
-
-                        ct.ThrowIfCancellationRequested();
 
                         List<Set> activeSets = Util.activeSet(setCounter);
 
@@ -1815,7 +1832,12 @@ namespace E7_Gear_Optimizer
                             valid = valid && checkFilter(calculatedStats, filter);
                             if (valid)
                             {
+                                if (limitResults && Interlocked.Read(ref resultsCurrent) >= limitResultsNum)
+                                {
+                                    return combinations;
+                                }
                                 combinations.Add((new[] { weapon, helmet, armor, n, r, b }, calculatedStats));
+                                Interlocked.Increment(ref resultsCurrent);
                             }
                         }
                         count++;
@@ -2576,6 +2598,7 @@ namespace E7_Gear_Optimizer
                 JObject json = createJson();
                 File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + "/Backup.json", json.ToString());
             }
+            Properties.Settings.Default.Save();
         }
 
         private JObject createJson()
@@ -3176,6 +3199,17 @@ namespace E7_Gear_Optimizer
             {
                 File.Delete(file);
             }
+        }
+        
+        private void Cb_LimitResults_CheckedChanged(object sender, EventArgs e)
+        {
+            nud_LimitResults.Enabled = cb_LimitResults.Checked;
+            Properties.Settings.Default.LimitResults = limitResults = cb_LimitResults.Checked;
+        }
+
+        private void Nud_LimitResults_ValueChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.LimitResultsNum = limitResultsNum = (int)nud_LimitResults.Value;
         }
     }
 }
