@@ -377,7 +377,7 @@ namespace E7_Gear_Optimizer
                     cb_OptimizeHero.Items.Add(hero.Name + " " + hero.ID);
                 }
                 l_Results.Text = numberOfResults().ToString("#,0");
-                updatecurrentGear();
+                updateCurrentGear();
             }
             else if (((TabControl)(sender)).SelectedIndex == 4)
             {
@@ -1223,7 +1223,7 @@ namespace E7_Gear_Optimizer
         //Calculate and display the current stats of the selected hero
         private void Cb_OptimizeHero_SelectedIndexChanged(object sender, EventArgs e)
         {
-            updatecurrentGear();
+            updateCurrentGear();
             l_Results.Text = numberOfResults().ToString("#,0");
         }
 
@@ -1918,7 +1918,7 @@ namespace E7_Gear_Optimizer
                 }
             }
             hero.equip(items);
-            updatecurrentGear();
+            updateCurrentGear();
             Dgv_OptimizeResults_RowEnter(null, new DataGridViewCellEventArgs(0, dgv_OptimizeResults.SelectedCells[0].RowIndex));
         }
 
@@ -2213,7 +2213,7 @@ namespace E7_Gear_Optimizer
             }
         }
 
-        private void updatecurrentGear()
+        private void updateCurrentGear()
         {
             dgv_CurrentGear.Rows.Clear();
             if (cb_OptimizeHero.Text != "")
