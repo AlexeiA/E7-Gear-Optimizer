@@ -2471,6 +2471,8 @@ namespace E7_Gear_Optimizer
         private void Nud_LimitResults_ValueChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.LimitResultsNum = limitResultsNum = (int)nud_LimitResults.Value;
+        }
+
         private void b_RightSideFocus_Click(TextBox tb, string[] stats)
         {
             MultiSelectForm multiSelect = new MultiSelectForm(stats);
