@@ -266,6 +266,7 @@ namespace E7_Gear_Optimizer
             Point cell = dgv_Inventory.CurrentCellAddress;
             DataGridViewColumn sortColumn = dgv_Inventory.SortedColumn;
             SortOrder order = dgv_Inventory.SortOrder;
+            string ID = cell.Y >= 0 ? dgv_Inventory.Rows[cell.Y].Cells[22].Value.ToString() : null;
             dgv_Inventory.Rows.Clear();
 
             //calculate new list of items based on the selected type filter
