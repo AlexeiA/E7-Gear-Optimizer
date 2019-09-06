@@ -32,6 +32,34 @@ namespace E7_Gear_Optimizer
         CancellationTokenSource tokenSource;
         string[] args = Environment.GetCommandLineArgs();
         Hero optimizeHero = null;
+        private bool useCache
+        {
+            get => Properties.Settings.Default.UseCache;
+            set
+            {
+                if (value && !Directory.Exists(Properties.Settings.Default.CacheDirectory))
+                {
+                    Directory.CreateDirectory(Properties.Settings.Default.CacheDirectory);
+                }
+                Properties.Settings.Default.UseCache = value;
+                Properties.Settings.Default.Save();
+            }
+        }
+        private bool importOnLoad
+        {
+            get => Properties.Settings.Default.ImportOnLoad;
+            set
+            {
+                Properties.Settings.Default.ImportOnLoad = value;
+                Properties.Settings.Default.Save();
+            }
+        }
+        private void setLastUsedFileName(string lastUsedFileName, bool web)
+        {
+            Properties.Settings.Default.LastUsedFileName = lastUsedFileName;
+            Properties.Settings.Default.LastUsedFileNameWeb = web;
+            Properties.Settings.Default.Save();
+        }
 
         public Main()
         {
@@ -53,10 +81,27 @@ namespace E7_Gear_Optimizer
                     MessageBox.Show("Could not find E7 optimizer Updater.exe");
                 }
             }
+            if (Properties.Settings.Default.UseCache)
+            {
+                Directory.CreateDirectory(Properties.Settings.Default.CacheDirectory);
+            }
             //Read list of heroes from epicsevendb.com
             try
             {
-                string json = Util.client.DownloadString(Util.ApiUrl + "/hero/");
+                string json;
+                string cacheFileName = Path.Combine(Properties.Settings.Default.CacheDirectory, "db.hero.json");
+                if (useCache && File.Exists(cacheFileName))
+                {
+                    json = File.ReadAllText(cacheFileName);
+                }
+                else
+                {
+                    json = Util.client.DownloadString(Util.ApiUrl + "/hero/");
+                    if (useCache)
+                    {
+                        File.WriteAllText(cacheFileName, json);
+                    }
+                }
                 JToken info = JObject.Parse(json)["results"];
                 int length = info.Count();
                 for (int i = 0; i < length; i++)
@@ -175,6 +220,10 @@ namespace E7_Gear_Optimizer
             lb_Sub2.SelectedIndex = 0;
             lb_Sub3.SelectedIndex = 0;
             lb_Sub4.SelectedIndex = 0;
+
+            cb_ImportOnLoad.Checked = importOnLoad;
+            cb_CacheWeb.Checked = useCache;
+            btn_InvalidateCache.Enabled = useCache;
         }
 
         
@@ -184,37 +233,39 @@ namespace E7_Gear_Optimizer
             {
                 if (ofd_import.ShowDialog() == DialogResult.OK)
                 {
-                    Import importForm = new Import(data, ofd_import.FileName, false);
-                    importForm.ShowDialog();
-                    if (!importForm.result)
-                    {
-                        MessageBox.Show("Corrupted or wrong file format. Please select a JSON file exported by this application!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    else
-                    {
-                        updateHeroList();
-                    }
+                    import(ofd_import.FileName);
                 }
             }
             else if (rb_import_web.Checked)
             {
                 if (ofd_import.ShowDialog() == DialogResult.OK)
                 {
-                    Import importForm = new Import(data, ofd_import.FileName, true);
-                    importForm.ShowDialog();
-                    if (!importForm.result)
-                    {
-                        MessageBox.Show("Corrupted or wrong file format. Please select a JSON file exported by /u/HyrTheWinter's Equipment Optimizer!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    else
-                    {
-                        updateHeroList();
-                    }
+                    import(ofd_import.FileName, true);
                 }
             }
             else
             {
                 MessageBox.Show("Please select the source to import from!");
+            }
+        }
+
+        private void import(string fileName, bool web = false, bool append = false)
+        {
+            Import importForm = new Import(data, fileName, web, append);
+            importForm.ShowDialog();
+            if (!importForm.result)
+            {
+                string message = web
+                    ? "Corrupted or wrong file format. Please select a JSON file exported by /u/HyrTheWinter's Equipment Optimizer!"
+                    : "Corrupted or wrong file format. Please select a JSON file exported by this application!";
+                MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                l_ImportResults.Text = $"Successfully imported {importForm.HeroesImported} heroes and {importForm.ItemsImported} items from {fileName}";
+                l_ImportResults.ForeColor = Color.Green;
+                updateHeroList();
+                setLastUsedFileName(fileName, web);
             }
         }
 
@@ -2513,6 +2564,7 @@ namespace E7_Gear_Optimizer
             {
                 JObject json = createJson();
                 File.WriteAllText(sfd_export.FileName, json.ToString());
+                setLastUsedFileName(sfd_export.FileName, false);
             }
         }
         
@@ -2957,32 +3009,14 @@ namespace E7_Gear_Optimizer
             {
                 if (ofd_import.ShowDialog() == DialogResult.OK)
                 {
-                    Import importForm = new Import(data, ofd_import.FileName, false, true);
-                    importForm.ShowDialog();
-                    if (!importForm.result)
-                    {
-                        MessageBox.Show("Corrupted or wrong file format. Please select a JSON file exported by this application!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    else
-                    {
-                        updateHeroList();
-                    }
+                    import(ofd_import.FileName, false, true);
                 }
             }
             else if (rb_import_web.Checked)
             {
                 if (ofd_import.ShowDialog() == DialogResult.OK)
                 {
-                    Import importForm = new Import(data, ofd_import.FileName, true, true);
-                    importForm.ShowDialog();
-                    if (!importForm.result)
-                    {
-                        MessageBox.Show("Corrupted or wrong file format. Please select a JSON file exported by /u/HyrTheWinter's Equipment Optimizer!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    else
-                    {
-                        updateHeroList();
-                    }
+                    import(ofd_import.FileName, true, true);
                 }
             }
             else
@@ -3114,6 +3148,34 @@ namespace E7_Gear_Optimizer
         private void Nud4_SpeedTunerImprint_ValueChanged(object sender, EventArgs e)
         {
             Cb4_SpeedTuner_SelectedIndexChanged(null, null);
+        }
+
+        private void Main_Load(object sender, EventArgs e)
+        {
+            if (importOnLoad && File.Exists(Properties.Settings.Default.LastUsedFileName))
+            {
+                import(Properties.Settings.Default.LastUsedFileName, Properties.Settings.Default.LastUsedFileNameWeb);
+            }
+        }
+
+        private void Cb_ImportOnLoad_CheckedChanged(object sender, EventArgs e)
+        {
+            importOnLoad = cb_ImportOnLoad.Checked;
+        }
+
+        private void Cb_CacheWeb_CheckedChanged(object sender, EventArgs e)
+        {
+            useCache = cb_CacheWeb.Checked;
+            btn_InvalidateCache.Enabled = useCache;
+        }
+
+        private void Btn_InvalidateCache_Click(object sender, EventArgs e)
+        {
+            var files = Directory.GetFiles(Properties.Settings.Default.CacheDirectory, "db.*");
+            foreach (var file in files)
+            {
+                File.Delete(file);
+            }
         }
     }
 }
