@@ -1759,11 +1759,11 @@ namespace E7_Gear_Optimizer
                     }
                     if (iDmg == 1)
                     {
-                        e.Value = (int)(skill.CalcDamage(stats, true) * stats.CritDmg);
+                        e.Value = (int)(skill.CalcDamage(stats, true));
                         break;
                     }
                     float skillDmg = skill.CalcDamage(stats);
-                    float skillCritDmg = skill.CalcDamage(stats, true) * stats.CritDmg;
+                    float skillCritDmg = skill.CalcDamage(stats, true);
                     float skillAvgDmg = stats.CritCapped * skillCritDmg + (1 - stats.Crit) * skillDmg;
                     if (iDmg == 2)
                     {
@@ -2273,7 +2273,7 @@ namespace E7_Gear_Optimizer
                     var skill = iSkill <= 2 ? hero.Skills[iSkill] : hero.SkillWithSoulburn;
                     float skillDmg = skill.CalcDamage(heroStats);
                     values[iCol++] = (int)skillDmg;
-                    float skillCritDmg = skill.CalcDamage(heroStats, true) * heroStats.CritDmg;
+                    float skillCritDmg = skill.CalcDamage(heroStats, true);
                     values[iCol++] = (int)skillCritDmg;
                     float skillAvgDmg = heroStats.CritCapped * skillCritDmg + (1 - heroStats.Crit) * skillDmg;
                     values[iCol++] = (int)skillAvgDmg;
