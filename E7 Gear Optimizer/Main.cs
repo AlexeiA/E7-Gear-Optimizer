@@ -42,23 +42,12 @@ namespace E7_Gear_Optimizer
                     Directory.CreateDirectory(Properties.Settings.Default.CacheDirectory);
                 }
                 Properties.Settings.Default.UseCache = value;
-                Properties.Settings.Default.Save();
-            }
-        }
-        private bool importOnLoad
-        {
-            get => Properties.Settings.Default.ImportOnLoad;
-            set
-            {
-                Properties.Settings.Default.ImportOnLoad = value;
-                Properties.Settings.Default.Save();
             }
         }
         private void setLastUsedFileName(string lastUsedFileName, bool web)
         {
             Properties.Settings.Default.LastUsedFileName = lastUsedFileName;
             Properties.Settings.Default.LastUsedFileNameWeb = web;
-            Properties.Settings.Default.Save();
         }
         static bool limitResults = Properties.Settings.Default.LimitResults;
         static int limitResultsNum = Properties.Settings.Default.LimitResultsNum;
@@ -219,9 +208,9 @@ namespace E7_Gear_Optimizer
             lb_Sub2.SelectedIndex = 0;
             lb_Sub3.SelectedIndex = 0;
             lb_Sub4.SelectedIndex = 0;
-            cb_ImportOnLoad.Checked = importOnLoad;
+            cb_ImportOnLoad.Checked = Properties.Settings.Default.ImportOnLoad;
             cb_CacheWeb.Checked = useCache;
-            btn_InvalidateCache.Enabled = useCache;
+            b_ClearCache.Enabled = useCache;
             cb_LimitResults.Checked = Properties.Settings.Default.LimitResults;
             nud_LimitResults.Enabled = Properties.Settings.Default.LimitResults;
             nud_LimitResults.Value = Properties.Settings.Default.LimitResultsNum;
@@ -2468,7 +2457,7 @@ namespace E7_Gear_Optimizer
 
         private void Main_Load(object sender, EventArgs e)
         {
-            if (importOnLoad && File.Exists(Properties.Settings.Default.LastUsedFileName))
+            if (Properties.Settings.Default.ImportOnLoad && File.Exists(Properties.Settings.Default.LastUsedFileName))
             {
                 import(Properties.Settings.Default.LastUsedFileName, Properties.Settings.Default.LastUsedFileNameWeb);
             }
@@ -2476,16 +2465,16 @@ namespace E7_Gear_Optimizer
 
         private void Cb_ImportOnLoad_CheckedChanged(object sender, EventArgs e)
         {
-            importOnLoad = cb_ImportOnLoad.Checked;
+            Properties.Settings.Default.ImportOnLoad = cb_ImportOnLoad.Checked;
         }
 
         private void Cb_CacheWeb_CheckedChanged(object sender, EventArgs e)
         {
             useCache = cb_CacheWeb.Checked;
-            btn_InvalidateCache.Enabled = useCache;
+            b_ClearCache.Enabled = useCache;
         }
 
-        private void Btn_InvalidateCache_Click(object sender, EventArgs e)
+        private void B_ClearCache(object sender, EventArgs e)
         {
             var files = Directory.GetFiles(Properties.Settings.Default.CacheDirectory, "db.*");
             foreach (var file in files)
