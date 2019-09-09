@@ -497,6 +497,7 @@
             this.tt_Skills = new System.Windows.Forms.ToolTip(this.components);
             this.nud_EnemyDef = new System.Windows.Forms.NumericUpDown();
             this.label35 = new System.Windows.Forms.Label();
+            this.lbl_Sorting = new System.Windows.Forms.Label();
             this.tb_Inventory.SuspendLayout();
             this.tc_InventorySets.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_ItemLocked)).BeginInit();
@@ -2942,6 +2943,7 @@
             // 
             // tb_Optimize
             // 
+            this.tb_Optimize.Controls.Add(this.lbl_Sorting);
             this.tb_Optimize.Controls.Add(this.label35);
             this.tb_Optimize.Controls.Add(this.nud_EnemyDef);
             this.tb_Optimize.Controls.Add(this.is_NecklaceOptimize);
@@ -5800,6 +5802,7 @@
             this.sfd_export.Filter = "JSON|*.json";
             // 
             // nud_EnemyDef
+            // lbl_Sorting
             // 
             this.nud_EnemyDef.Location = new System.Drawing.Point(6, 216);
             this.nud_EnemyDef.Maximum = new decimal(new int[] {
@@ -5822,6 +5825,13 @@
             this.label35.TabIndex = 148;
             this.label35.Text = "Enemy Defence\r\n(for skills damage)";
             this.tt_Skills.SetToolTip(this.label35, "The Mossy Testudos in Golem 6 have 520 Defense");
+            this.lbl_Sorting.Location = new System.Drawing.Point(287, 539);
+            this.lbl_Sorting.Name = "lbl_Sorting";
+            this.lbl_Sorting.Size = new System.Drawing.Size(387, 30);
+            this.lbl_Sorting.TabIndex = 149;
+            this.lbl_Sorting.Text = "Sorting...";
+            this.lbl_Sorting.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbl_Sorting.Visible = false;
             // 
             // Main
             // 
@@ -6384,6 +6394,7 @@
         private System.Windows.Forms.ToolTip tt_Skills;
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.NumericUpDown nud_EnemyDef;
+        private System.Windows.Forms.Label lbl_Sorting;
     }
 }
 
