@@ -5810,8 +5810,7 @@
             this.nud_EnemyDef.Name = "nud_EnemyDef";
             this.nud_EnemyDef.Size = new System.Drawing.Size(46, 20);
             this.nud_EnemyDef.TabIndex = 147;
-            this.tt_Skills.SetToolTip(this.nud_EnemyDef, "Slimes in 1-1 have 55.\r\nWyvern 1 wave 1 dragons have 165.\r\nThe Mossy Testudos in " +
-        "Golem 6 have 642 Defense.\r\nThe Blaze Dragonas in Wyvern 6 have 592 Defense.");
+            this.tt_Skills.SetToolTip(this.nud_EnemyDef, "The Mossy Testudos in Golem 6 have 520 Defense");
             this.nud_EnemyDef.ValueChanged += new System.EventHandler(this.Nud_EnemyDef_ValueChanged);
             // 
             // label35
@@ -5822,8 +5821,7 @@
             this.label35.Size = new System.Drawing.Size(91, 26);
             this.label35.TabIndex = 148;
             this.label35.Text = "Enemy Defence\r\n(for skills damage)";
-            this.tt_Skills.SetToolTip(this.label35, "Slimes in 1-1 have 55.\r\nWyvern 1 wave 1 dragons have 165.\r\nThe Mossy Testudos in " +
-        "Golem 6 have 642 Defense.\r\nThe Blaze Dragonas in Wyvern 6 have 592 Defense.");
+            this.tt_Skills.SetToolTip(this.label35, "The Mossy Testudos in Golem 6 have 520 Defense");
             // 
             // Main
             // 
