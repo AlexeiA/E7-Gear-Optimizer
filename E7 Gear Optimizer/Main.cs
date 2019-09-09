@@ -44,15 +44,6 @@ namespace E7_Gear_Optimizer
                 Properties.Settings.Default.UseCache = value;
             }
         }
-        private bool importOnLoad
-        {
-            get => Properties.Settings.Default.ImportOnLoad;
-            set
-            {
-                Properties.Settings.Default.ImportOnLoad = value;
-                Properties.Settings.Default.Save();
-            }
-        }
         private void setLastUsedFileName(string lastUsedFileName, bool web)
         {
             Properties.Settings.Default.LastUsedFileName = lastUsedFileName;
@@ -219,7 +210,7 @@ namespace E7_Gear_Optimizer
             lb_Sub3.SelectedIndex = 0;
             lb_Sub4.SelectedIndex = 0;
 
-            cb_ImportOnLoad.Checked = importOnLoad;
+            cb_ImportOnLoad.Checked = Properties.Settings.Default.ImportOnLoad;
             cb_CacheWeb.Checked = useCache;
             btn_InvalidateCache.Enabled = useCache;
         }
@@ -3156,7 +3147,7 @@ namespace E7_Gear_Optimizer
 
         private void Main_Load(object sender, EventArgs e)
         {
-            if (importOnLoad && File.Exists(Properties.Settings.Default.LastUsedFileName))
+            if (Properties.Settings.Default.ImportOnLoad && File.Exists(Properties.Settings.Default.LastUsedFileName))
             {
                 import(Properties.Settings.Default.LastUsedFileName, Properties.Settings.Default.LastUsedFileNameWeb);
             }
@@ -3164,7 +3155,7 @@ namespace E7_Gear_Optimizer
 
         private void Cb_ImportOnLoad_CheckedChanged(object sender, EventArgs e)
         {
-            importOnLoad = cb_ImportOnLoad.Checked;
+            Properties.Settings.Default.ImportOnLoad = cb_ImportOnLoad.Checked;
         }
 
         private void Cb_CacheWeb_CheckedChanged(object sender, EventArgs e)
