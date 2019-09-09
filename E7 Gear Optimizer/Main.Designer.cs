@@ -1540,7 +1540,7 @@
             dataGridViewCellStyle21.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgv_Inventory.DefaultCellStyle = dataGridViewCellStyle21;
             this.dgv_Inventory.Location = new System.Drawing.Point(6, 40);
-            this.dgv_Inventory.MultiSelect = false;
+            this.dgv_Inventory.MultiSelect = true;
             this.dgv_Inventory.Name = "dgv_Inventory";
             this.dgv_Inventory.ReadOnly = true;
             this.dgv_Inventory.RowHeadersWidth = 62;
