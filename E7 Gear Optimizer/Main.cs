@@ -311,6 +311,14 @@ namespace E7_Gear_Optimizer
                     dgv_OptimizeResults.Columns.Add(columnResults);
                 }
             }
+            foreach (DataGridViewColumn col in dgv_CurrentGear.Columns)
+            {
+                col.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            }
+            foreach (DataGridViewColumn col in dgv_OptimizeResults.Columns)
+            {
+                col.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            }
         }
 
         private void B_import_Click(object sender, EventArgs e)
@@ -1813,7 +1821,7 @@ namespace E7_Gear_Optimizer
         }
 
         //Sort results across pages 
-        private void Dgv_OptimizeResults_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        private async void Dgv_OptimizeResults_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             Func<(Item[], SStats), float> func = null;
             switch (e.ColumnIndex)
@@ -1901,16 +1909,24 @@ namespace E7_Gear_Optimizer
             {
                 return;
             }
-            if (sortColumn == e.ColumnIndex)
+            if (combinations.Count > 1_000_000)
             {
-                combinations = combinations.OrderBy(func).ToList();
-                sortColumn = -1;
+                lbl_Sorting.Visible = true;
             }
-            else
+            await Task.Run(() =>
             {
-                combinations = combinations.OrderByDescending(func).ToList();
-                sortColumn = e.ColumnIndex;
-            }
+                if (sortColumn == e.ColumnIndex)
+                {
+                    combinations = combinations.OrderBy(func).ToList();
+                    sortColumn = -1;
+                }
+                else
+                {
+                    combinations = combinations.OrderByDescending(func).ToList();
+                    sortColumn = e.ColumnIndex;
+                }
+            });
+            lbl_Sorting.Visible = false;
             if (filteredCombinations.Count > 0)
             {
                 b_FilterResults.PerformClick();
