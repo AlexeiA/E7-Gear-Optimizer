@@ -270,6 +270,7 @@ namespace E7_Gear_Optimizer
             Point cell = dgv_Inventory.CurrentCellAddress;
             DataGridViewColumn sortColumn = dgv_Inventory.SortedColumn;
             SortOrder order = dgv_Inventory.SortOrder;
+            Item prevSelectedItem = selectedItem;
             dgv_Inventory.Rows.Clear();
 
             //calculate new list of items based on the selected type filter
@@ -312,7 +313,7 @@ namespace E7_Gear_Optimizer
             if (cell.X > -1 && cell.Y > -1 && cell.X < dgv_Inventory.ColumnCount && cell.Y < dgv_Inventory.RowCount)
             {
                 //as order can change restore selected cell by selectedItem.ID
-                var rows = dgv_Inventory.Rows.Cast<DataGridViewRow>().Where(r => r.Cells["c_ItemID"].Value.ToString() == selectedItem.ID);
+                var rows = dgv_Inventory.Rows.Cast<DataGridViewRow>().Where(r => r.Cells["c_ItemID"].Value.ToString() == prevSelectedItem.ID);
                 if (rows.Count() > 0)
                 {
                     int y = rows.First().Index;
@@ -436,10 +437,6 @@ namespace E7_Gear_Optimizer
         //Change the controls on the inventory tab to reflect the data of the currenty selected item
         private void dgv_Inventory_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
-            if (dgv_Inventory.SelectedRows.Count == 0)
-            {
-                return;
-            }
             DataGridViewRow row = dgv_Inventory.Rows[e.RowIndex];
             ((RadioButton)p_Set.Controls.Find("rb_" + ((Set)row.Cells["c_SetID"].Value).ToString() + "Set", false)[0]).Checked = true;
             ((RadioButton)p_Type.Controls.Find("rb_" + ((ItemType)row.Cells["c_TypeID"].Value).ToString() + "Type", false)[0]).Checked = true;
