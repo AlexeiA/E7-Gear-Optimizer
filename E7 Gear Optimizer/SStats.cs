@@ -6,13 +6,22 @@ using System.Threading.Tasks;
 
 namespace E7_Gear_Optimizer
 {
+    /// <summary>
+    /// Represents all stats of a character or an item
+    /// </summary>
     public class SStats
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SStats"/> with all properties equal to zero
+        /// </summary>
         public SStats()
         {
-
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SStats"/> with values copied from <paramref name="stats"/> Dictionary
+        /// </summary>
+        /// <param name="stats"></param>
         public SStats(Dictionary<Stats, float> stats)
         {
             ATKPercent = stats.ContainsKey(Stats.ATKPercent) ? stats[Stats.ATKPercent] : 0;
@@ -28,6 +37,10 @@ namespace E7_Gear_Optimizer
             RES = stats.ContainsKey(Stats.RES) ? stats[Stats.RES] : 0;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SStats"/> with values copied from another <see cref="SStats"/>
+        /// </summary>
+        /// <param name="stats"></param>
         public SStats(SStats sStats)
         {
             ATKPercent = sStats.ATKPercent;
@@ -47,7 +60,7 @@ namespace E7_Gear_Optimizer
         public float ATK { get; set; }
         public float SPD { get; set; }
         public float Crit { get; set; }
-        private float _RealCrit { get => Crit < 1 ? Crit : 1; }
+        public float CritCapped { get => Crit < 1 ? Crit : 1; }
         public float CritDmg { get; set; }
         public float HPPercent { get; set; }
         public float HP { get; set; }
@@ -58,9 +71,13 @@ namespace E7_Gear_Optimizer
         public float HPpS { get => HP * SPD / 100; }
         public float EHP { get => HP * (1 + (DEF / 300)); }
         public float EHPpS { get => EHP * SPD / 100; }
-        public float DMG { get => (ATK * (1 - _RealCrit)) + (ATK * _RealCrit * CritDmg); }
+        public float DMG { get => (ATK * (1 - CritCapped)) + (ATK * CritCapped * CritDmg); }
         public float DMGpS { get => DMG * SPD / 100; }
 
+        /// <summary>
+        /// Adds values of <paramref name="sStats"/> properties to corresponding values of the <see cref="SStats"/>
+        /// </summary>
+        /// <param name="sStats"></param>
         public void Add(SStats sStats)
         {
             ATKPercent += sStats.ATKPercent;
@@ -76,6 +93,10 @@ namespace E7_Gear_Optimizer
             RES += sStats.RES;
         }
 
+        /// <summary>
+        /// Subtracts values of <paramref name="sStats"/> properties from corresponding values of the <see cref="SStats"/>
+        /// </summary>
+        /// <param name="sStats"></param>
         public void Subtract(SStats sStats)
         {
             ATKPercent -= sStats.ATKPercent;
@@ -91,6 +112,10 @@ namespace E7_Gear_Optimizer
             RES -= sStats.RES;
         }
 
+        /// <summary>
+        /// Copies value of <paramref name="stat"/> to corresponding value of the <see cref="SStats"/>
+        /// </summary>
+        /// <param name="stat"></param>
         public void SetStat(Stat stat)
         {
             switch (stat.Name)
@@ -131,6 +156,10 @@ namespace E7_Gear_Optimizer
             }
         }
 
+        /// <summary>
+        /// Copies values of <paramref name="stats"/> properties to corresponding values of the <see cref="SStats"/>
+        /// </summary>
+        /// <param name="stats"></param>
         public void SetStats(Stat[] stats)
         {
             foreach (var stat in stats)

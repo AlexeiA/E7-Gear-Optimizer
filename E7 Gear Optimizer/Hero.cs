@@ -36,11 +36,10 @@ namespace E7_Gear_Optimizer
         //Cache of Enum.GetValues(typeof(Stats)). Used to iterate over Stats. Greatly increases performance.
         public static Stats[] statsArrayGeneric = Enum.GetValues(typeof(Stats)).Cast<Stats>().ToArray();
 
-        private SStats sBaseStats;
-        private SStats sCurrentStats;
-        private SStats sAwakeningStats;
+        public Skill[] Skills { get; }
+        public Skill SkillWithSoulburn { get; }
 
-        public Hero(string ID, string name, List<Item> gear, Item artifact, int lvl, int awakening)
+        public Hero(string ID, string name, List<Item> gear, Item artifact, int lvl, int awakening, int[] skillEnhance = null)
         {
             this.ID = ID;
             Name = name;
@@ -57,11 +56,18 @@ namespace E7_Gear_Optimizer
             {
                 string json = loadJson();
                 json = Encoding.UTF8.GetString(Encoding.Default.GetBytes(json)).Replace("✰", "");
-                json = json.Remove(json.IndexOf("\"skills\":")) + json.Substring(json.IndexOf("\"awakening\":"));
+                JObject jObject = JObject.Parse(json);
                 baseStats = getBaseStats(json);
                 Element = getElement(json);
                 Class = getClass(json);
                 AwakeningStats = getAwakeningStats(json);
+                Skills = new Skill[]
+                {
+                    new Skill(jObject, 0, skillEnhance != null ? skillEnhance[0] : 0),
+                    new Skill(jObject, 1, skillEnhance != null ? skillEnhance[1] : 0),
+                    new Skill(jObject, 2, skillEnhance != null ? skillEnhance[2] : 0)
+                };
+                SkillWithSoulburn = Skills.FirstOrDefault(s => s.HasSoulburn);
             }
             catch (WebException ex)
             {
