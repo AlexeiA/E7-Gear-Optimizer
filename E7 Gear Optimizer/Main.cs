@@ -410,8 +410,6 @@ namespace E7_Gear_Optimizer
         {
             //clear currently displayed items
             Point cell = dgv_Inventory.CurrentCellAddress;
-            DataGridViewColumn sortColumn = dgv_Inventory.SortedColumn;
-            SortOrder order = dgv_Inventory.SortOrder;
             Item prevSelectedItem = selectedItem;
             dgv_Inventory.SuspendLayout();
             dgv_Inventory.Rows.Clear();
@@ -423,36 +421,11 @@ namespace E7_Gear_Optimizer
             filteredList = setFilter == null ? filteredList : filteredList.Where(x => x.Set == setFilter);
             foreach (Item item in filteredList)
             {
-                object[] values = new object[dgv_Inventory.ColumnCount];
-                values[0] = Sets.Images[(int)item.Set];
-                values[20] = (int)item.Set;
-                values[1] = Types.Images[(int)item.Type];
-                values[21] = (int)item.Type;
-                values[2] = item.Grade.ToString();
-                values[3] = item.ILvl;
-                values[4] = "+" + item.Enhance.ToString();
-                values[5] = item.Main.Name.ToString().Replace("Percent","%");
-                values[6] = Util.percentStats.Contains(item.Main.Name) ? item.Main.Value.ToString("P0", CultureInfo.CreateSpecificCulture("en-US")) : item.Main.Value.ToString();
-                values[19] = item.Equipped == null ? "" : item.Equipped.Name;
-                for (int i = 0; i < item.SubStats.Length; i++)
-                {
-                    values[(int)item.SubStats[i].Name + 7] = item.SubStats[i].Value < 1 ? item.SubStats[i].Value.ToString("P0", CultureInfo.CreateSpecificCulture("en-US")) : item.SubStats[i].Value.ToString();
-                }
-                for (int i = 7; i < 18; i++)
-                {
-                    if (values[i] == null)
-                    {
-                        values[i] = "";
-                    }
-                }
-                values[18] = item.WSS.ToString("P0", CultureInfo.CreateSpecificCulture("en-US"));
-                values[22] = item.ID;
-                values[23] = item.Locked.ToString();
-                dgv_Inventory.Rows.Add(values);
+                dgv_Inventory.Rows.Add(getInventoryRowValues(item));
             }
             l_ItemCount.Text = filteredList.Count().ToString();
             //restore previous sorting and select previously selected cell
-            if (order != SortOrder.None) dgv_Inventory.Sort(sortColumn, (ListSortDirection)Enum.Parse(typeof(ListSortDirection), order.ToString()));
+            sortDataGridView(dgv_Inventory);
             if (cell.X > -1 && cell.Y > -1 && cell.X < dgv_Inventory.ColumnCount && cell.Y < dgv_Inventory.RowCount)
             {
                 //as order can change restore selected cell by selectedItem.ID
@@ -470,6 +443,40 @@ namespace E7_Gear_Optimizer
             dgv_Inventory.ResumeLayout();
         }
 
+        /// <summary>
+        /// Gets Array of values for <see cref="dgv_Inventory"/>'s row based on the <paramref name="item"/>'s stats
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        private object[] getInventoryRowValues(Item item)
+        {
+            object[] values = new object[dgv_Inventory.ColumnCount];
+            values[0] = Sets.Images[(int)item.Set];
+            values[20] = (int)item.Set;
+            values[1] = Types.Images[(int)item.Type];
+            values[21] = (int)item.Type;
+            values[2] = item.Grade.ToString();
+            values[3] = item.ILvl;
+            values[4] = "+" + item.Enhance.ToString();
+            values[5] = item.Main.Name.ToString().Replace("Percent", "%");
+            values[6] = Util.percentStats.Contains(item.Main.Name) ? item.Main.Value.ToString("P0", CultureInfo.CreateSpecificCulture("en-US")) : item.Main.Value.ToString();
+            values[19] = item.Equipped == null ? "" : item.Equipped.Name;
+            for (int i = 0; i < item.SubStats.Length; i++)
+            {
+                values[(int)item.SubStats[i].Name + 7] = item.SubStats[i].Value < 1 ? item.SubStats[i].Value.ToString("P0", CultureInfo.CreateSpecificCulture("en-US")) : item.SubStats[i].Value.ToString();
+            }
+            for (int i = 7; i < 18; i++)
+            {
+                if (values[i] == null)
+                {
+                    values[i] = "";
+                }
+            }
+            values[18] = item.WSS.ToString("P0", CultureInfo.CreateSpecificCulture("en-US"));
+            values[22] = item.ID;
+            values[23] = item.Locked.ToString();
+            return values;
+        }
 
         public void updateHeroList()
         {
@@ -892,11 +899,25 @@ namespace E7_Gear_Optimizer
             Item newItem = new Item(data.incrementItemID(), type, set, grade, ilvl, enh, main, substats.ToArray(), hero, locked);
             hero?.equip(newItem);
             data.Items.Add(newItem);
-            updateItemList();
-            //select the created item if it is displayed with the current filter
+            
+            //add row and select the created item if it is displayed with the current filter
             if ((tc_Inventory.SelectedIndex == 0 || (ItemType)(tc_Inventory.SelectedIndex - 1) == type) && (tc_InventorySets.SelectedIndex == 0 || (Set)(tc_InventorySets.SelectedIndex - 1) == set))
             {
+                dgv_Inventory.Rows.Add(getInventoryRowValues(newItem));
+                sortDataGridView(dgv_Inventory);
                 dgv_Inventory.CurrentCell = dgv_Inventory.Rows.Cast<DataGridViewRow>().Where(x => x.Cells["c_ItemID"].Value.ToString() == newItem.ID).First().Cells[0];
+            }
+        }
+
+        /// <summary>
+        /// Sorts <see cref="DataGridView"/> using previous sorting parameters
+        /// </summary>
+        /// <param name="dgv"></param>
+        private static void sortDataGridView(DataGridView dgv)
+        {
+            if (dgv.SortOrder != SortOrder.None)
+            {
+                dgv.Sort(dgv.SortedColumn, dgv.SortOrder == SortOrder.Ascending ? ListSortDirection.Ascending : ListSortDirection.Descending);
             }
         }
 
@@ -905,7 +926,8 @@ namespace E7_Gear_Optimizer
         {
             if (dgv_Inventory.SelectedRows.Count > 0)
             {
-                string ID = (string)dgv_Inventory.SelectedRows[0].Cells["c_itemID"].Value;
+                DataGridViewRow row = dgv_Inventory.SelectedRows[0];
+                string ID = (string)row.Cells["c_itemID"].Value;
                 Item item = data.Items.Find(x => x.ID == ID);
                 item.Set = (Set)Enum.Parse(typeof(Set), p_Set.Controls.OfType<RadioButton>().First(x => x.Checked).Name.Replace("rb_", "").Replace("Set", ""));
                 item.Type = (ItemType)Enum.Parse(typeof(ItemType), p_Type.Controls.OfType<RadioButton>().First(x => x.Checked).Name.Replace("rb_", "").Replace("Type", ""));
@@ -950,11 +972,12 @@ namespace E7_Gear_Optimizer
                     if (item.Equipped != null) item.Equipped.unequip(item);
                     newHero.equip(item);
                 }
-                updateItemList();
-                //select the edited item if it is displayed with the current filter
-                if ((tc_Inventory.SelectedIndex == 0 || (ItemType)(tc_Inventory.SelectedIndex - 1) == item.Type) && (tc_InventorySets.SelectedIndex == 0 || (Set)(tc_InventorySets.SelectedIndex - 1) == item.Set))
+
+                row.SetValues(getInventoryRowValues(item));
+                sortDataGridView(dgv_Inventory);
+                if (!row.Displayed)
                 {
-                    dgv_Inventory.CurrentCell = dgv_Inventory.Rows.Cast<DataGridViewRow>().Where(x => x.Cells["c_ItemID"].Value.ToString() == item.ID).First().Cells[0];
+                    dgv_Inventory.FirstDisplayedScrollingRowIndex = row.Index;
                 }
             }
         }
