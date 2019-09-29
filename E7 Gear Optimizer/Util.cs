@@ -176,7 +176,7 @@ namespace E7_Gear_Optimizer
         public static HashSet<Set> fourPieceSets = new HashSet<Set>() { Set.Attack, Set.Destruction, Set.Lifesteal, Set.Rage, Set.Speed, Set.Counter };
 
         //Faster alternative to fourPieceSets.Contains() or Dictionary<Set, bool> to determine if a set is 4-piece set. Each index represents (int)Set
-        private static readonly bool[] isFourPieceSetArray;
+        internal static readonly bool[] isFourPieceSetArray;
 
         static Util()
         {
@@ -256,7 +256,7 @@ namespace E7_Gear_Optimizer
             return activeSets;
         }
 
-        public static int setSlots(List<Set> activeSets)
+        public static int setSlots(IEnumerable<Set> activeSets)
         {
             int setSlots = 0;
             foreach(Set s in activeSets)

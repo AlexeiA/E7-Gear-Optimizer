@@ -1647,26 +1647,38 @@ namespace E7_Gear_Optimizer
                 return combinations;
             }
             int[] setCounter = new int[Util.SETS_LENGTH];
+            SStats setBonusStats = new SStats();
+            Stack<Set> activeSets = new Stack<Set>(3);
             setCounter[(int)weapon.Set]++;
-            setCounter[(int)helmet.Set]++;
-            setCounter[(int)armor.Set]++;
+            int iSet = (int)helmet.Set;
+            setCounter[iSet]++;
+            if (!Util.isFourPieceSetArray[iSet] && setCounter[iSet] == 2)
+            {
+                activeSets.Push(helmet.Set);
+                Hero.addSetBonusStats(setBonusStats, helmet.Set);
+            }
+            iSet = (int)armor.Set;
+            setCounter[iSet]++;
+            if (!Util.isFourPieceSetArray[iSet] && setCounter[iSet] == 2)
+            {
+                activeSets.Push(armor.Set);
+                Hero.addSetBonusStats(setBonusStats, armor.Set);
+            }
             int count = 0;
             foreach (Item n in necklaces)
             {
                 sItemStats.Add(n.AllStats);
-                setCounter[(int)n.Set]++;
+                bool isSetAddedN = incrementSetCounter(n.Set);
                 foreach (Item r in rings)
                 {
                     sItemStats.Add(r.AllStats);
-                    setCounter[(int)r.Set]++;
+                    bool isSetAddedR = incrementSetCounter(r.Set);
                     foreach (Item b in boots)
                     {
                         ct.ThrowIfCancellationRequested();
 
                         sItemStats.Add(b.AllStats);
-                        setCounter[(int)b.Set]++;
-
-                        List<Set> activeSets = Util.activeSet(setCounter);
+                        bool isSetAddedB = incrementSetCounter(b.Set);
 
                         bool valid = true;
                         foreach (Set s in setFocus)
@@ -1679,7 +1691,6 @@ namespace E7_Gear_Optimizer
                         }
                         if (valid)
                         {
-                            SStats setBonusStats = hero.setBonusStats(activeSets);
                             SStats calculatedStats = new SStats();
                             calculatedStats.ATK = (sStats.ATK * (1 + sItemStats.ATKPercent + setBonusStats.ATKPercent)) + sItemStats.ATK + hero.Artifact.SubStats[0].Value;
                             calculatedStats.HP = (sStats.HP * (1 + sItemStats.HPPercent + setBonusStats.HPPercent)) + sItemStats.HP + hero.Artifact.SubStats[1].Value;
@@ -1703,15 +1714,53 @@ namespace E7_Gear_Optimizer
                         count++;
                         sItemStats.Subtract(b.AllStats);
                         setCounter[(int)b.Set]--;
+                        if (isSetAddedB)
+                        {
+                            activeSets.Pop();
+                            Hero.subtractSetBonusStats(setBonusStats, b.Set);
+                        }
                     }
                     sItemStats.Subtract(r.AllStats);
                     setCounter[(int)r.Set]--;
+                    if (isSetAddedR)
+                    {
+                        activeSets.Pop();
+                        Hero.subtractSetBonusStats(setBonusStats, r.Set);
+                    }
                 }
                 sItemStats.Subtract(n.AllStats);
                 setCounter[(int)n.Set]--;
+                if (isSetAddedN)
+                {
+                    activeSets.Pop();
+                    Hero.subtractSetBonusStats(setBonusStats, n.Set);
+                }
             }
             progress.Report(count);
             return combinations;
+
+            bool incrementSetCounter(Set set)
+            {
+                int setIndex = (int)set;
+                setCounter[setIndex]++;
+                bool isSetAdded = false;
+                if (Util.isFourPieceSetArray[setIndex])
+                {
+                    if (setCounter[setIndex] == 4)
+                    {
+                        activeSets.Push(set);
+                        Hero.addSetBonusStats(setBonusStats, set);
+                        isSetAdded = true;
+                    }
+                }
+                else if (setCounter[setIndex] % 2 == 0)
+                {
+                    activeSets.Push(set);
+                    Hero.addSetBonusStats(setBonusStats, set);
+                    isSetAdded = true;
+                }
+                return isSetAdded;
+            }
         }
 
         /// <summary>

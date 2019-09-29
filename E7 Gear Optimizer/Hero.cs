@@ -352,37 +352,75 @@ namespace E7_Gear_Optimizer
             SStats stats = new SStats();
             foreach (Set set in activeSets)
             {
-                switch (set)
-                {
-                    case Set.Attack:
-                        stats.ATKPercent += 0.35f;
-                        break;
-                    case Set.Crit:
-                        stats.Crit += 0.12f;
-                        break;
-                    case Set.Def:
-                        stats.DEFPercent += 0.15f;
-                        break;
-                    case Set.Destruction:
-                        stats.CritDmg += 0.4f;
-                        break;
-                    case Set.Health:
-                        stats.HPPercent += 0.15f;
-                        break;
-                    case Set.Hit:
-                        stats.EFF += 0.2f;
-                        break;
-                    case Set.Resist:
-                        stats.RES += 0.2f;
-                        break;
-                    case Set.Speed:
-                        stats.SPD += 0.25f;
-                        break;
-                    default:
-                        break;
-                }
+                addSetBonusStats(stats, set);
             }
             return stats;
+        }
+
+        public static void addSetBonusStats(SStats stats, Set set)
+        {
+            switch (set)
+            {
+                case Set.Attack:
+                    stats.ATKPercent += 0.35f;
+                    break;
+                case Set.Crit:
+                    stats.Crit += 0.12f;
+                    break;
+                case Set.Def:
+                    stats.DEFPercent += 0.15f;
+                    break;
+                case Set.Destruction:
+                    stats.CritDmg += 0.4f;
+                    break;
+                case Set.Health:
+                    stats.HPPercent += 0.15f;
+                    break;
+                case Set.Hit:
+                    stats.EFF += 0.2f;
+                    break;
+                case Set.Resist:
+                    stats.RES += 0.2f;
+                    break;
+                case Set.Speed:
+                    stats.SPD += 0.25f;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public static void subtractSetBonusStats(SStats stats, Set set)
+        {
+            switch (set)
+            {
+                case Set.Attack:
+                    stats.ATKPercent -= 0.35f;
+                    break;
+                case Set.Crit:
+                    stats.Crit -= 0.12f;
+                    break;
+                case Set.Def:
+                    stats.DEFPercent -= 0.15f;
+                    break;
+                case Set.Destruction:
+                    stats.CritDmg -= 0.4f;
+                    break;
+                case Set.Health:
+                    stats.HPPercent -= 0.15f;
+                    break;
+                case Set.Hit:
+                    stats.EFF -= 0.2f;
+                    break;
+                case Set.Resist:
+                    stats.RES -= 0.2f;
+                    break;
+                case Set.Speed:
+                    stats.SPD -= 0.25f;
+                    break;
+                default:
+                    break;
+            }
         }
 
         public List<Set> activeSets()
