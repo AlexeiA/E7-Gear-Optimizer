@@ -1576,6 +1576,7 @@ namespace E7_Gear_Optimizer
                 SStats sHeroStats = new SStats(hero.calcStatsWithoutGear((float)nud_CritBonus.Value / 100f));
                 SStats sItemStats = new SStats();
                 Dictionary<Stats, (float, float)> optimizedFilterStats = optimizeFilterStats();
+                var filterFuncs = convertFilterToFuncs(optimizedFilterStats);
                 Interlocked.Exchange(ref resultsCurrent, 0);
                 foreach (Item w in weapons)
                 {
@@ -1589,7 +1590,7 @@ namespace E7_Gear_Optimizer
 
                             SStats sItemStatsTemp = new SStats(sItemStats);
 
-                            tasks.Add(Task.Run(() => calculate(w, h, a, necklaces, rings, boots, hero, sHeroStats, optimizedFilterStats, setFocus, progress, sItemStatsTemp, cb_Broken.Checked, tokenSource.Token), tokenSource.Token));
+                            tasks.Add(Task.Run(() => calculate(w, h, a, necklaces, rings, boots, hero, sHeroStats, filterFuncs, setFocus, progress, sItemStatsTemp, cb_Broken.Checked, tokenSource.Token), tokenSource.Token));
 
                             sItemStats.Subtract(a.AllStats);
                         }
@@ -1636,7 +1637,7 @@ namespace E7_Gear_Optimizer
                                                         Item armor, List<Item> necklaces,
                                                         List<Item> rings, List<Item> boots, Hero hero, 
                                                         SStats sStats,
-                                                        Dictionary<Stats, (float, float)> filter, List<Set> setFocus,
+                                                        Func<SStats, bool>[] filter, List<Set> setFocus,
                                                         IProgress<int> progress, SStats sItemStats,
                                                         bool brokenSets, CancellationToken ct)
         {
@@ -1728,6 +1729,65 @@ namespace E7_Gear_Optimizer
                 }
             }
             return stats;
+        }
+
+        /// <summary>
+        /// Converts filter dictionary to array of Funcs to speedup stats filtering
+        /// </summary>
+        /// <param name="filterStats"></param>
+        /// <returns></returns>
+        private static Func<SStats, bool>[] convertFilterToFuncs(Dictionary<Stats, (float, float)> filterStats)
+        {
+            var funcs = new List<Func<SStats, bool>>();
+            foreach (KeyValuePair<Stats, (float, float)> stat in filterStats)
+            {
+                float min = stat.Value.Item1;
+                float max = stat.Value.Item2;
+                switch (stat.Key)
+                {
+                    case Stats.ATK:
+                        funcs.Add(stats => min <= stats.ATK && max >= stats.ATK);
+                        break;
+                    case Stats.SPD:
+                        funcs.Add(stats => min <= stats.SPD && max >= stats.SPD);
+                        break;
+                    case Stats.Crit:
+                        funcs.Add(stats => min <= stats.Crit && max >= stats.Crit);
+                        break;
+                    case Stats.CritDmg:
+                        funcs.Add(stats => min <= stats.CritDmg && max >= stats.CritDmg);
+                        break;
+                    case Stats.HP:
+                        funcs.Add(stats => min <= stats.HP && max >= stats.HP);
+                        break;
+                    case Stats.HPpS:
+                        funcs.Add(stats => min <= stats.HPpS && max >= stats.HPpS);
+                        break;
+                    case Stats.DEF:
+                        funcs.Add(stats => min <= stats.DEF && max >= stats.DEF);
+                        break;
+                    case Stats.EFF:
+                        funcs.Add(stats => min <= stats.EFF && max >= stats.EFF);
+                        break;
+                    case Stats.RES:
+                        funcs.Add(stats => min <= stats.RES && max >= stats.RES);
+                        break;
+                    case Stats.EHP:
+                        funcs.Add(stats => min <= stats.EHP && max >= stats.EHP);
+                        break;
+                    case Stats.EHPpS:
+                        funcs.Add(stats => min <= stats.EHPpS && max >= stats.EHPpS);
+                        break;
+                    case Stats.DMG:
+                        funcs.Add(stats => min <= stats.DMG && max >= stats.DMG);
+                        break;
+                    case Stats.DMGpS:
+                        funcs.Add(stats => min <= stats.DMGpS && max >= stats.DMGpS);
+                        break;
+
+                }
+            }
+            return funcs.ToArray();
         }
 
         //Get the value for the current cell depending on which page of results is displayed
@@ -2483,6 +2543,18 @@ namespace E7_Gear_Optimizer
                 }
             }
             return valid;
+        }
+
+        private static bool checkFilter(SStats stats, Func<SStats, bool>[] filterFuncs)
+        {
+            foreach (var func in filterFuncs)
+            {
+                if (!func(stats))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         private void B_FilterResults_Click(object sender, EventArgs e)
